@@ -115,7 +115,6 @@ public class Neo4jGraphConnector {
 
                     for (Relationship rel : iterable) {
                         tmp = rel.toString();
-                        // TODO: Need to make sure this structure of rel.toString is always consistent
                         String edgeId = tmp.substring(tmp.indexOf(",") + 1, tmp.indexOf("]"));
                         pathRelationships.append(edgeId).append("-");
                         retset.add(rel);
@@ -205,7 +204,7 @@ public class Neo4jGraphConnector {
         if(query.equals("")) return nodeids ;
 
         // TODO: Commented by Mohanna to be able to do testing
-        //if(query.contains("REMOVE") || query.contains("SET")) return nodeids; //todo remove when testing
+        //if(query.contains("REMOVE") || query.contains("SET")) return nodeids;
 
         String rows = "";
         StringBuilder rowsSB = new StringBuilder();
@@ -377,6 +376,7 @@ public class Neo4jGraphConnector {
 
         return result;
     }
+   
     public int createViewOnGraph(String query) {
         Set<String> nodeids = new HashSet<String>();
 
@@ -800,15 +800,9 @@ public class Neo4jGraphConnector {
                 Map<String, Object> row = result.next();
                 JessNode entry = new JessNode();
 
-                //todo manual label set
                 entry.setLabel(lab);
 
-
-
-
                 for (Map.Entry<String, Object> column : row.entrySet()) {
-
-
 
                     if(column.getValue() == null) continue;
 
@@ -926,6 +920,7 @@ public class Neo4jGraphConnector {
 
         System.out.println("Label is " + label);
 
+        // TODO: here, the edge labels should be read from a label registry file 
         EdgeEnum lab = EdgeEnum.POSTED; //default
         if(label.equals("PARENT_OF")) lab = EdgeEnum.PARENT_OF;
         else if (label.equals("HAS_TAG")) lab = EdgeEnum.HAS_TAG;
@@ -941,13 +936,7 @@ public class Neo4jGraphConnector {
                 Map<String, Object> row = result.next();
                 JessEdge entry = new JessEdge();
 
-
-//                System.out.println(row.toString());
-
-                //todo manual label set
                 entry.setLabel(lab);
-
-
 
                 for (Map.Entry<String, Object> column : row.entrySet()) {
 
@@ -990,6 +979,7 @@ public class Neo4jGraphConnector {
     }
 
 
+    // The followings are only for testing
     public static void main(String[] args){
 
         //main method not used, only for testing purposes

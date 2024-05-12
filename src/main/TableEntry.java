@@ -12,9 +12,6 @@ import java.util.*;
         This also contains a list of pairs, in which each pair contains (1) a list of conditions on the label, and (2) a list of keys in the dependency table for which the pair
            would affect. This is basically the implementation of the dependency table described in Chapter 5 of the thesis.
 
-
-    Most (?) (all?) of the maintenance work is done within this class. Ignore commented lines as they were probably there for troubleshooting.
-
  */
 
 public class TableEntry {
@@ -46,13 +43,7 @@ public class TableEntry {
         for(EntryData myED : entries){
 
 
-//            System.out.println("Mine: ");
-//            for(main.Condition c : myED.getConditions()) c.printCondition();
-//            System.out.println("Compared with : ");
-
-
             Set<Condition> myConds = new HashSet<>(myED.getConditions());
-//            for(main.Condition d : myConds) d.printCondition();
 
             if(myConds.equals(edConds)){
 

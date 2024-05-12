@@ -1,22 +1,15 @@
 # Introduction
-Views are widely used in relational databases to facilitate query writing, give individualized abstractions to different user groups, and improve query execution time with materialization techniques. This project explores how views could be defined and used in graph database systems (GDBS) with a similar purpose to what can be found in relational systems. 
+Views are widely used in relational databases to facilitate query writing, give individualized abstractions to different user groups, and improve query execution time with materialization techniques. This project explores how views could be defined and used in Neo4j by extending its query language Cypher. 
 
-We perform our analysis using Neo4j and its query language Cypher which has many of the features typically found in graph query languages, aiming to pave the way for integrating view management into a wider range of GDBS.
-
-# Setting up and running the middleware
+This repository contains the code of a middleware system which accepts Cypher queries and our language extensions as input, rewrites queries as necessary, and communicates with the local Neo4j database. For more details on the architecture of the middleware, you can access the paper here. 
 
 # Project Structure
 
 ## Source Code
-Our source code is under the [src folder](./src/), 
+Our source code is under the [src folder](./src/). Follow the [instructions](./src/README.md) to setup and run the code. There is also additional detailed design documentation under this directory.
+
+## Benchmark and experiments
+You can find the queries in our benchmark under [benchmark_and_experiments](./benchmark_and_experiments/). For each of the evaluation experiments we performed (that their results are shown in [evaluation_plots](./test/evaluation_plots/)), you can also find the experiment scripts to run in order to replicate the results. Instructions on how to run the experiments can be found [here](./benchmark_and_experiments/Instructions.md). (Note that the queries included in this repository are only a subsection of our bigger benchmark that only returns nodes as return values. However, in the more recent version of this project we are also exploring queries returning paths in our benchmark.)
 
 ## Evaluation Plots
-Under [evaluation_plots](./test/evaluation_plots/) directory you can find the figures in our paper showing the performance of view creation and usage for our benchmark queries.
-
-
-# Developer notes on the internal design - Data Structures 
-ain.Main: nodeTable and edgeTable store as the key the view name that is used, along with the set of node or edge identifiers returned by the view. 
-
-main.QueryParser: This walks down the tree and executes enter/exit based on which components are entered. Look for ANTLR documentation for details. There is meta-data during these enter/exit methods to keep the dependencyTable updated if it is a view creation. For view usage, variables are set up (symbols used for view use, set of conditions) so that main.Main can know which set of identifiers it can pull from the node or edge tables. For view updates, the dependency table is referenced and a set of outdated views is returned to main.Main, and most steps are commented with details/logic.
-
-main.DependencyTable is a hashtable with a graph component label as the key (Person, PARENT_OF, Post, etc) and a main.TableEntry object as the value. main.TableEntry contains a list of main.EntryData which are associated with itself. For instance, a main.TableEntry :Post may have several main.EntryData, which differ due to the set of conditions. main.EntryData contains a condition list (which uniquely identifies it) and a list of views which depend on it. 
+The [evaluation_plots](./test/evaluation_plots/) directory contains plots showing the performance of view creation and usage for our the subsection of our benchmark queries discussed in our paper.

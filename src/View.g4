@@ -83,9 +83,6 @@ expr : viewatom ;
 variable :  '('nodeName')' | '('nodeName':'type')'; // nodeName
 type    : NAME ;
 nodeName : NAME ;
-// Changed by Mohanna to include
-    // Queries with more than one type of relationships [:POSTED|PARENT_OF]
-    // Specifying the length of the relationship in pattern matching
 relation : relationValue?(':'type)?('|'type)*(relationLength)?;
 relationValue : NAME ;
 relationLength: '*' | '*'VALUE | '*'VALUE'..'VALUE | '*..'VALUE | '*'VALUE'..' ;
@@ -116,7 +113,6 @@ setattr:  attribute '=' attribute |
 arithmetic: '*' | '+' | '-' | '/'
 ;
 
-// TODO: Should insertion also support directed relationships?
 insertion: insertionVar |
            insertion '-[' insertrelation ']-' insertion
            ;
@@ -145,8 +141,6 @@ CONSTANTS : 'true' | 'false' | 'null';
 
 VALUE   : [0]|[1-9][0-9]* | [0]'.'[0-9]*[1-9]
             | '"'[a-zA-Z_# 0-9]+'"'| '\''[a-zA-Z_# 0-9]+'\'';
-// Mohanna's Change: Underscore is added to the number part to support better namings for
-// views that are each other's variants
 NAME    : [a-zA-Z_]+[0-9_]* ;
 WHITESPACE : ' '-> skip ;
 ANY     : . ;
