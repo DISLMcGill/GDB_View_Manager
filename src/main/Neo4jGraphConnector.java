@@ -758,7 +758,7 @@ public class Neo4jGraphConnector {
 
     // Used to get the database path with the given size from the config file
     public String getDbPath(String size){
-        String configPath = "./test/config";
+        String configPath = "./src/config";
         try {
             Scanner sc = new Scanner(new File(configPath));
             while(sc.hasNextLine()){

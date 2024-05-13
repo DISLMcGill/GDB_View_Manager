@@ -1,0 +1,6 @@
+small=<path to small database>
+medium=<path to medium database>
+
+// The sample paths are 
+small=/home/small_data/dbms-629ebabb-ad88-4945-bf35-9575ae8832d7
+medium=/home/medium_data/dbms-6dfe4dc7-0c86-4820-85ed-d1de46c1546f
